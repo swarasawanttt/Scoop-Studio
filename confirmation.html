@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - Scoop Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 50%, #f0f4ff 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #8b4789);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #ff6b9d;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 5% 60px;
+        }
+
+        /* Success Banner */
+        .success-banner {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+            animation: fadeInScale 0.6s ease;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        .success-banner h1 {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
+
+        .success-banner p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .order-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #fff0f6, #ffe8f0);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            color: #ff6b9d;
+            font-size: 1.3rem;
+            margin-top: 1rem;
+        }
+
+        /* Order Details Grid */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .details-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .details-card h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-icon {
+            font-size: 1.8rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: #333;
+            text-align: right;
+        }
+
+        /* Order Items */
+        .order-items {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .order-items h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .item-row:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .item-details {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #ff6b9d;
+            font-size: 1.1rem;
+        }
+
+        /* Order Summary */
+        .order-summary-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .summary-row.total {
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            border-top: 2px solid #f0f0f0;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #ff6b9d;
+            border: 2px solid #ff6b9d;
+        }
+
+        .btn-secondary:hover {
+            background: #ff6b9d;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Tracking Timeline */
+        .tracking-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .tracking-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            z-index: 2;
+        }
+
+        .timeline-dot.pending {
+            background: #e0e0e0;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-desc {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .timeline-time {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .success-banner h1 {
+                font-size: 2rem;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🍦 Scoop Studio</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="customize.html">Customize</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Success Banner -->
+        <div class="success-banner">
+            <div class="success-icon">🎉</div>
+            <h1>Order Confirmed!</h1>
+            <p>Thank you for your order!</p>
+            <p>A confirmation email has been sent to <strong id="customerEmail"></strong></p>
+            <div class="order-number" id="orderNumber">Order #</div>
+        </div>
+
+        <!-- Order Details Grid -->
+        <div class="details-grid">
+            <!-- Customer Information -->
+            <div class="details-card">
+                <h2><span class="detail-icon">👤</span> Customer Information</h2>
+                <div class="detail-row">
+                    <span class="detail-label">Name:</span>
+                    <span class="detail-value" id="customerName"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value" id="emailDetail"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Phone:</span>
+                    <span class="detail-value" id="phoneDetail"></span>
+                </div>
+            </div>
+
+            <!-- Delivery Information -->
+            <div class="details-card">
+                <h2><span class="detail-icon">📦</span> Delivery Address</h2>
+                <div class="detail-row">
+                    <span class="detail-label">Address:</span>
+                    <span class="detail-value" id="addressDetail"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">City:</span>
+                    <span class="detail-value" id="cityDetail"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">State & ZIP:</span>
+                    <span class="detail-value" id="stateZipDetail"></span>
+                </div>
+            </div>
+
+            <!-- Payment Information -->
+            <div class="details-card">
+                <h2><span class="detail-icon">💳</span> Payment Method</h2>
+                <div class="detail-row">
+                    <span class="detail-label">Method:</span>
+                    <span class="detail-value" id="paymentMethod"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status:</span>
+                    <span class="detail-value" style="color: #4CAF50;">✓ Paid</span>
+                </div>
+                <div class="detail-row" id="cardRow">
+                    <span class="detail-label">Card:</span>
+                    <span class="detail-value" id="cardDetail"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Items -->
+        <div class="order-items">
+            <h2>Order Items</h2>
+            <div id="orderItemsList"></div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary-section">
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="summarySubtotal">$0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Fee:</span>
+                <span id="summaryDelivery">$5.99</span>
+            </div>
+            <div class="summary-row">
+                <span>Discount:</span>
+                <span id="summaryDiscount" style="color: #4CAF50;">-$0.00</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total Paid:</span>
+                <span id="summaryTotal">$0.00</span>
+            </div>
+        </div>
+
+        <!-- Tracking Timeline -->
+        <div class="tracking-section">
+            <h2>Delivery Status</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">✓</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Order Confirmed</div>
+                        <div class="timeline-desc">Your order has been received and confirmed</div>
+                        <div class="timeline-time" id="orderTime"></div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot pending">🍦</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Preparing Your Order</div>
+                        <div class="timeline-desc">We're handcrafting your delicious ice cream</div>
+                        <div class="timeline-time">Estimated: 15-20 minutes</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot pending">🚚</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Out for Delivery</div>
+                        <div class="timeline-desc">Your order is on its way to you</div>
+                        <div class="timeline-time">Estimated: 30-45 minutes</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot pending">🏠</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Delivered</div>
+                        <div class="timeline-desc">Enjoy your sweet treats!</div>
+                        <div class="timeline-time">Estimated delivery time</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="menu.html" class="btn btn-primary">Order Again</a>
+            <button class="btn btn-secondary" onclick="window.print()">📄 Print Receipt</button>
+            <a href="reviews.html" class="btn btn-secondary">Leave a Review</a>
+        </div>
+    </div>
+
+    <script>
+        // Load order data from localStorage
+        const orderData = JSON.parse(localStorage.getItem('currentOrder'));
+
+        if (!orderData) {
+            alert('No order found!');
+            window.location.href = 'index.html';
+        } else {
+            // Populate order details
+            document.getElementById('orderNumber').textContent = orderData.orderId;
+            document.getElementById('customerEmail').textContent = orderData.customer.email;
+            document.getElementById('customerName').textContent = 
+                `${orderData.customer.firstName} ${orderData.customer.lastName}`;
+            document.getElementById('emailDetail').textContent = orderData.customer.email;
+            document.getElementById('phoneDetail').textContent = orderData.customer.phone;
+            
+            // Delivery address
+            const apartment = orderData.delivery.apartment ? `, ${orderData.delivery.apartment}` : '';
+            document.getElementById('addressDetail').textContent = 
+                `${orderData.delivery.address}${apartment}`;
+            document.getElementById('cityDetail').textContent = orderData.delivery.city;
+            document.getElementById('stateZipDetail').textContent = 
+                `${orderData.delivery.state} ${orderData.delivery.zip}`;
+            
+            // Payment method
+            const paymentLabels = {
+                'card': 'Credit Card',
+                'paypal': 'PayPal',
+                'cash': 'Cash on Delivery'
+            };
+            document.getElementById('paymentMethod').textContent = 
+                paymentLabels[orderData.payment.method] || orderData.payment.method;
+            
+            if (orderData.payment.method === 'card' && orderData.payment.lastFourDigits) {
+                document.getElementById('cardDetail').textContent = 
+                    `**** **** **** ${orderData.payment.lastFourDigits}`;
+            } else {
+                document.getElementById('cardRow').style.display = 'none';
+            }
+            
+            // Order items
+            const itemsList = document.getElementById('orderItemsList');
+            orderData.items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item-row';
+                itemDiv.innerHTML = `
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-details">Quantity: ${item.quantity} × $${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                `;
+                itemsList.appendChild(itemDiv);
+            });
+            
+            // Order summary
+            if (orderData.summary) {
+                document.getElementById('summarySubtotal').textContent = `$${orderData.summary.subtotal}`;
+                document.getElementById('summaryDelivery').textContent = 
+                    orderData.summary.deliveryFee === '0.00' ? 'FREE' : `$${orderData.summary.deliveryFee}`;
+                document.getElementById('summaryDiscount').textContent = `-$${orderData.summary.discount}`;
+                document.getElementById('summaryTotal').textContent = `$${orderData.summary.total}`;
+            }
+            
+            // Order time
+            const orderDate = new Date(orderData.timestamp);
+            document.getElementById('orderTime').textContent = orderDate.toLocaleString();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Creations - Scoop Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 50%, #f0f4ff 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #8b4789);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #ff6b9d;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 5% 60px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #8b4789);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        /* Filter & Sort */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sort-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .sort-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #ff6b9d;
+            background: white;
+            color: #ff6b9d;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .sort-btn:hover,
+        .sort-btn.active {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+        }
+
+        .create-btn {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .create-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        /* Creations Grid */
+        .creations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .creation-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .creation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .creation-visual {
+            background: linear-gradient(135deg, #ffd1e3, #c9b3ff);
+            padding: 2rem;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ingredients-display {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .creation-details {
+            padding: 1.5rem;
+        }
+
+        .creation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .creation-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .creation-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ff6b9d;
+        }
+
+        .creator-info {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .creation-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .ingredients-list {
+            background: #f8f8f8;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .ingredients-list h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .ingredients-list p {
+            color: #666;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .creation-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .rating-section {
+            margin-bottom: 1rem;
+        }
+
+        .stars-display {
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .rating-input {
+            display: flex;
+            gap: 0.3rem;
+            font-size: 1.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .star {
+            cursor: pointer;
+            color: #ddd;
+            transition: all 0.2s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #FFD700;
+        }
+
+        .creation-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .add-to-cart-btn {
+            flex: 1;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .view-recipe-btn {
+            padding: 1rem 1.5rem;
+            background: white;
+            color: #ff6b9d;
+            border: 2px solid #ff6b9d;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .view-recipe-btn:hover {
+            background: #ff6b9d;
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .empty-state-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            color: #333;
+        }
+
+        .close-btn {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            border: none;
+            background: none;
+        }
+
+        .close-btn:hover {
+            color: #ff6b9d;
+        }
+
+        .recipe-detail {
+            margin-bottom: 1.5rem;
+        }
+
+        .recipe-detail h3 {
+            color: #333;
+            margin-bottom: 0.8rem;
+        }
+
+        .recipe-detail p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast-icon {
+            font-size: 2rem;
+        }
+
+        .toast-message {
+            font-weight: 600;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .creations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .sort-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🍦 Scoop Studio</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="customize.html">Customize</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="page-header">
+            <h1>Community Creations</h1>
+            <p>Discover and try ice cream combinations created by our community!</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="sort-buttons">
+                <button class="sort-btn active" onclick="sortCreations('newest')">Newest</button>
+                <button class="sort-btn" onclick="sortCreations('popular')">Most Popular</button>
+                <button class="sort-btn" onclick="sortCreations('rating')">Top Rated</button>
+            </div>
+            <a href="customize.html" class="create-btn">✨ Create Your Own</a>
+        </div>
+
+        <!-- Creations Grid -->
+        <div class="creations-grid" id="creationsGrid">
+            <!-- Items will be dynamically loaded -->
+        </div>
+    </div>
+
+    <!-- Recipe Detail Modal -->
+    <div class="modal" id="recipeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon" id="toastIcon">✓</span>
+        <span class="toast-message" id="toastMessage">Success!</span>
+    </div>
+
+    <script>
+        let communityCreations = JSON.parse(localStorage.getItem('communityCreations')) || [];
+        let currentSort = 'newest';
+
+        function init() {
+            renderCreations();
+        }
+
+        function renderCreations() {
+            const grid = document.getElementById('creationsGrid');
+            
+            if (communityCreations.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎨</div>
+                        <h2>No Community Creations Yet</h2>
+                        <p style="color: #666; margin: 1rem 0;">Be the first to share your custom ice cream creation!</p>
+                        <a href="customize.html" class="create-btn">Create One Now</a>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = '';
+
+            communityCreations.forEach((creation, index) => {
+                const card = document.createElement('div');
+                card.className = 'creation-card';
+
+                const avgRating = creation.averageRating || 0;
+                const stars = '★'.repeat(Math.round(avgRating)) + '☆'.repeat(5 - Math.round(avgRating));
+                
+                // Build ingredients display
+                let ingredientsEmojis = '';
+                if (creation.customization.base) ingredientsEmojis += creation.customization.base.emoji;
+                if (creation.customization.mixin) ingredientsEmojis += creation.customization.mixin.emoji;
+                if (creation.customization.sauce) ingredientsEmojis += creation.customization.sauce.emoji;
+                if (creation.customization.toppings && creation.customization.toppings.length > 0) {
+                    ingredientsEmojis += creation.customization.toppings.slice(0, 3).map(t => t.emoji).join('');
+                }
+                if (creation.customization.container) ingredientsEmojis += creation.customization.container.emoji;
+
+                // Build ingredients text
+                let ingredientsText = '';
+                if (creation.customization.base) ingredientsText += `Base: ${creation.customization.base.name}`;
+                if (creation.customization.mixin) ingredientsText += ` • Mix-in: ${creation.customization.mixin.name}`;
+                if (creation.customization.sauce) ingredientsText += ` • Sauce: ${creation.customization.sauce.name}`;
+
+                const createdDate = new Date(creation.createdDate).toLocaleDateString();
+
+                card.innerHTML = `
+                    <div class="creation-visual">
+                        <div class="ingredients-display">${ingredientsEmojis || '🍦'}</div>
+                    </div>
+                    <div class="creation-details">
+                        <div class="creation-header">
+                            <div>
+                                <div class="creation-name">${creation.name}</div>
+                                <div class="creator-info">by ${creation.creator} • ${createdDate}</div>
+                            </div>
+                            <div class="creation-price">$${creation.price.toFixed(2)}</div>
+                        </div>
+                        
+                        <p class="creation-description">${creation.description}</p>
+                        
+                        <div class="ingredients-list">
+                            <h4>🍨 What's Inside:</h4>
+                            <p>${ingredientsText}</p>
+                        </div>
+                        
+                        <div class="creation-stats">
+                            <div class="stat">
+                                <div class="stat-value">${avgRating.toFixed(1)}</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${creation.ratings.length}</div>
+                                <div class="stat-label">Reviews</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${creation.orderCount || 0}</div>
+                                <div class="stat-label">Orders</div>
+                            </div>
+                        </div>
+                        
+                        <div class="rating-section">
+                            <div class="stars-display">${stars}</div>
+                            <small style="color: #666;">Rate this creation:</small>
+                            <div class="rating-input" data-index="${index}">
+                                <span class="star" data-rating="1" onclick="rateCreation(${index}, 1)">★</span>
+                                <span class="star" data-rating="2" onclick="rateCreation(${index}, 2)">★</span>
+                                <span class="star" data-rating="3" onclick="rateCreation(${index}, 3)">★</span>
+                                <span class="star" data-rating="4" onclick="rateCreation(${index}, 4)">★</span>
+                                <span class="star" data-rating="5" onclick="rateCreation(${index}, 5)">★</span>
+                            </div>
+                        </div>
+                        
+                        <div class="creation-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(${index})">Add to Cart</button>
+                            <button class="view-recipe-btn" onclick="viewRecipe(${index})">📋</button>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function sortCreations(type) {
+            currentSort = type;
+            
+            // Update active button
+            document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (type === 'newest') {
+                communityCreations.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+            } else if (type === 'popular') {
+                communityCreations.sort((a, b) => (b.orderCount || 0) - (a.orderCount || 0));
+            } else if (type === 'rating') {
+                communityCreations.sort((a, b) => (b.averageRating || 0) - (a.averageRating || 0));
+            }
+
+            renderCreations();
+        }
+
+        function rateCreation(index, rating) {
+            communityCreations[index].ratings.push(rating);
+            
+            // Calculate new average
+            const ratings = communityCreations[index].ratings;
+            const avg = ratings.reduce((sum, r) => sum + r, 0) / ratings.length;
+            communityCreations[index].averageRating = avg;
+
+            localStorage.setItem('communityCreations', JSON.stringify(communityCreations));
+            
+            showToast('⭐', 'Thank you for rating!');
+            renderCreations();
+        }
+
+        function addToCart(index) {
+            const creation = communityCreations[index];
+            
+            // Increment order count
+            creation.orderCount = (creation.orderCount || 0) + 1;
+            localStorage.setItem('communityCreations', JSON.stringify(communityCreations));
+
+            // Create cart item
+            const cartItem = {
+                id: 'community-' + Date.now(),
+                name: creation.name,
+                price: creation.price,
+                category: 'custom',
+                description: creation.description,
+                emoji: '🎨',
+                quantity: 1,
+                customization: creation.customization
+            };
+
+            // Add to cart
+            let cart = JSON.parse(localStorage.getItem('icecreamCart')) || [];
+            cart.push(cartItem);
+            localStorage.setItem('icecreamCart', JSON.stringify(cart));
+
+            showToast('✓', 'Added to cart!');
+            renderCreations();
+        }
+
+        function viewRecipe(index) {
+            const creation = communityCreations[index];
+            const modal = document.getElementById('recipeModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+
+            title.textContent = creation.name;
+
+            let recipeHTML = `
+                <div class="recipe-detail">
+                    <h3>📝 Description</h3>
+                    <p>${creation.description}</p>
+                </div>
+                <div class="recipe-detail">
+                    <h3>🍨 Base Flavor</h3>
+                    <p>${creation.customization.base ? creation.customization.base.name : 'None'}</p>
+                </div>
+            `;
+
+            if (creation.customization.mixin) {
+                recipeHTML += `
+                    <div class="recipe-detail">
+                        <h3>🍫 Mix-in</h3>
+                        <p>${creation.customization.mixin.name}</p>
+                    </div>
+                `;
+            }
+
+            if (creation.customization.sauce) {
+                recipeHTML += `
+                    <div class="recipe-detail">
+                        <h3>🍯 Sauce</h3>
+                        <p>${creation.customization.sauce.name}</p>
+                    </div>
+                `;
+            }
+
+            if (creation.customization.toppings && creation.customization.toppings.length > 0) {
+                recipeHTML += `
+                    <div class="recipe-detail">
+                        <h3>✨ Toppings</h3>
+                        <p>${creation.customization.toppings.map(t => t.name).join(', ')}</p>
+                    </div>
+                `;
+            }
+
+            if (creation.customization.container) {
+                recipeHTML += `
+                    <div class="recipe-detail">
+                        <h3>🥤 Container</h3>
+                        <p>${creation.customization.container.name}</p>
+                    </div>
+                `;
+            }
+
+            recipeHTML += `
+                <div class="recipe-detail">
+                    <h3>💰 Total Price</h3>
+                    <p style="font-size: 1.5rem; font-weight: bold; color: #ff6b9d;">$${creation.price.toFixed(2)}</p>
+                </div>
+            `;
+
+            body.innerHTML = recipeHTML;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('recipeModal').classList.remove('active');
+        }
+
+        // Close modal on outside click
+        document.getElementById('recipeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Show toast notification
+        function showToast(icon, message) {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastIcon.textContent = icon;
+            toastMessage.textContent = message;
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

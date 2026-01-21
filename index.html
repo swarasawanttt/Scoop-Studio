@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoop Studio - Artisan Ice Cream Delivered</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            overflow-x: hidden;
+            background: #fff;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(248, 203, 233, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 2.0rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #a41a48, #c44569, #730751);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #ff6b9d;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b9d, #c44569);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: url('images/background.png') center/cover no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Optional: Add overlay for better text readability */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3); /* white overlay with 30% opacity */
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #f30457, #440409);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #131212;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #ff6b9d;
+            border: 2px solid #ff6b9d;
+        }
+
+        .btn-secondary:hover {
+            background: #ff6b9d;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Floating Ice Cream Scoops */
+        .float-scoop {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.15;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .scoop1 { width: 150px; height: 150px; background: #ffb3d9; top: 15%; left: 10%; animation-delay: 0s; }
+        .scoop2 { width: 120px; height: 120px; background: #b8e0ff; top: 70%; left: 15%; animation-delay: 1s; }
+        .scoop3 { width: 100px; height: 100px; background: #fff4b3; top: 20%; right: 15%; animation-delay: 2s; }
+        .scoop4 { width: 130px; height: 130px; background: #d4b3ff; bottom: 20%; right: 10%; animation-delay: 1.5s; }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 5%;
+            background: rgb(252, 219, 219);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #7d3838;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2.5rem;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #ffffff 100%);
+            transition: all 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Highlights Section */
+        .highlights {
+            padding: 6rem 5%;
+            background: url('images/background.png');
+        }
+
+        .highlights-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .highlight-box {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .highlight-box:hover {
+            transform: scale(1.05);
+        }
+
+        .highlight-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #ff6b9d;
+        }
+
+        .highlight-box p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ff6b9d;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🍦 Scoop Studio</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="float-scoop scoop1"></div>
+        <div class="float-scoop scoop2"></div>
+        <div class="float-scoop scoop3"></div>
+        <div class="float-scoop scoop4"></div>
+        
+        <div class="hero-content">
+            <h1>A scoop for every mood</h1>
+            <p>From classic combinations to fully custom creations, every scoop starts with you.</p>
+            <div class="cta-buttons">
+                <a href="menu.html" class="btn btn-primary">Browse Menu</a>
+                <a href="customize.html" class="btn btn-secondary">Build Your Own</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">Why Choose Scoop Studio?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🌱</div>
+                <h3>Natural Ingredients</h3>
+                <p>We use only the finest organic ingredients sourced from local farms for the freshest taste.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Custom Creations</h3>
+                <p>Build your dream flavor with our interactive DIY builder and endless topping combinations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚚</div>
+                <h3>Fast Delivery</h3>
+                <p>Fresh ice cream delivered in specialized freezer packaging to maintain perfect consistency.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>Award Winning</h3>
+                <p>Recognized by food critics and loved by thousands of happy customers nationwide.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights Section -->
+    <section class="highlights">
+        <h2 class="section-title">What Makes Us Special</h2>
+        <div class="highlights-container">
+            <div class="highlight-box">
+                <h3>50+ Unique Flavors</h3>
+                <p>From classic vanilla bean to exotic lavender honey and everything in between. Our master ice cream makers craft new seasonal flavors every month.</p>
+            </div>
+            <div class="highlight-box">
+                <h3>Sustainable Packaging</h3>
+                <p>We're committed to the planet. All our packaging is 100% recyclable and biodegradable, keeping your ice cream cold and the Earth cool.</p>
+            </div>
+            <div class="highlight-box">
+                <h3>Dietary Options</h3>
+                <p>Vegan, sugar-free, gluten-free, and keto-friendly options available. Everyone deserves delicious ice cream!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Scoop Studio Ice Cream Parlour. All rights reserved.</p>
+        <p>📍 123 Cream Street, Dessert City | 📞 (555) 123-4567 | ✉️ hello@sweetscoops.com</p>
+        <div class="social-links">
+            <a href="#" title="Instagram">📷</a>
+            <a href="#" title="Facebook">📘</a>
+            <a href="#" title="Twitter">🐦</a>
+        </div>
+    </footer>
+</body>
+</html>

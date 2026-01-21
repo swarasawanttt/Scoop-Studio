@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Your Own - Scoop Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url(images/bg3.jpg);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(248, 203, 233, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #8b4789);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #ff6b9d;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b9d, #c44569);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 5% 60px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #8b4789);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        /* Builder Layout */
+        .builder-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Customization Sections */
+        .customization-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .section {
+            background: rgb(245, 210, 210);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-subtitle {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Options Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .option-card {
+            background: #f8f8f8;
+            border: 3px solid transparent;
+            border-radius: 15px;
+            padding: 1.2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .option-card.selected {
+            border-color: #ff6b9d;
+            background: linear-gradient(135deg, #fff0f6, #ffe8f0);
+            transform: scale(1.05);
+        }
+
+        .option-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .option-price {
+            color: #ff6b9d;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Toppings with Checkboxes */
+        .toppings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+
+        .topping-card {
+            background: #f8f8f8;
+            border: 3px solid transparent;
+            border-radius: 15px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .topping-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .topping-card.selected {
+            border-color: #ff6b9d;
+            background: linear-gradient(135deg, #fff0f6, #ffe8f0);
+        }
+
+        .topping-content {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .topping-emoji {
+            font-size: 2rem;
+        }
+
+        .topping-info {
+            flex: 1;
+        }
+
+        .topping-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .topping-price {
+            color: #ff6b9d;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Preview Panel */
+        .preview-panel {
+            position: sticky;
+            top: 120px;
+            background: rgb(245, 210, 210);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            height: fit-content;
+        }
+
+        .preview-panel h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .preview-cone {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #fff5f7, #f0f4ff);
+            border-radius: 15px;
+        }
+
+        .cone-display {
+            font-size: 8rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .preview-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .detail-value {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .price-breakdown {
+            background: #f8f8f8;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            color: #666;
+        }
+
+        .price-total {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 2px solid #ddd;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .add-creation-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-creation-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .add-creation-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 1024px) {
+            .builder-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-panel {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .options-grid,
+            .toppings-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast-icon {
+            font-size: 2rem;
+        }
+
+        .toast-message {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Share Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h2 {
+            color: #333;
+            font-size: 1.8rem;
+        }
+
+        .close-modal-btn {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            border: none;
+            background: none;
+            transition: all 0.3s;
+        }
+
+        .close-modal-btn:hover {
+            color: #ff6b9d;
+            transform: rotate(90deg);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b9d;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .modal-btn-secondary {
+            background: white;
+            color: #666;
+            border: 2px solid #e0e0e0;
+        }
+
+        .modal-btn-secondary:hover {
+            border-color: #ff6b9d;
+            color: #ff6b9d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🍦 Scoop Studio</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="customize.html">Customize</a></li>
+            <li><a href= "community.html">Community</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="page-header">
+            <h1>Build Your Dream Ice Cream</h1>
+            <p>Create your perfect frozen masterpiece from scratch</p>
+        </div>
+
+        <div class="builder-layout">
+            <!-- Customization Panel -->
+            <div class="customization-panel">
+                <!-- Base Flavor -->
+                <div class="section">
+                    <h2>🍨 Base Flavor</h2>
+                    <p class="section-subtitle">Choose your ice cream base (select one)</p>
+                    <div class="options-grid" id="baseOptions"></div>
+                </div>
+
+                <!-- Mix-ins -->
+                <div class="section">
+                    <h2>🍫 Mix-ins</h2>
+                    <p class="section-subtitle">Add delicious chunks (select one)</p>
+                    <div class="options-grid" id="mixinOptions"></div>
+                </div>
+
+                <!-- Sauce -->
+                <div class="section">
+                    <h2>🍯 Sauce Swirl</h2>
+                    <p class="section-subtitle">Pick your drizzle (select one)</p>
+                    <div class="options-grid" id="sauceOptions"></div>
+                </div>
+
+                <!-- Toppings -->
+                <div class="section">
+                    <h2>✨ Toppings</h2>
+                    <p class="section-subtitle">Select all toppings you want (multiple allowed)</p>
+                    <div class="toppings-grid" id="toppingsOptions"></div>
+                </div>
+
+                <!-- Container -->
+                <div class="section">
+                    <h2>🥤 Container</h2>
+                    <p class="section-subtitle">How would you like it served?</p>
+                    <div class="options-grid" id="containerOptions"></div>
+                </div>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="preview-panel">
+                <h2>Your Creation</h2>
+                <div class="preview-cone">
+                    <div class="cone-display" id="coneDisplay">🍦</div>
+                    <div id="creationName" style="font-size: 1.2rem; color: #666; font-weight: 600;">Start Building...</div>
+                </div>
+
+                <div class="preview-details" id="previewDetails">
+                    <div class="detail-item">
+                        <span class="detail-label">Base:</span>
+                        <span class="detail-value" id="selectedBase">Not selected</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Mix-in:</span>
+                        <span class="detail-value" id="selectedMixin">Not selected</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Sauce:</span>
+                        <span class="detail-value" id="selectedSauce">Not selected</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Toppings:</span>
+                        <span class="detail-value" id="selectedToppings">None</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Container:</span>
+                        <span class="detail-value" id="selectedContainer">Not selected</span>
+                    </div>
+                </div>
+
+                <div class="price-breakdown">
+                    <div class="price-item">
+                        <span>Base Price:</span>
+                        <span id="basePrice">$0.00</span>
+                    </div>
+                    <div class="price-item">
+                        <span>Mix-in:</span>
+                        <span id="mixinPrice">$0.00</span>
+                    </div>
+                    <div class="price-item">
+                        <span>Sauce:</span>
+                        <span id="saucePrice">$0.00</span>
+                    </div>
+                    <div class="price-item">
+                        <span>Toppings:</span>
+                        <span id="toppingsPrice">$0.00</span>
+                    </div>
+                    <div class="price-item">
+                        <span>Container:</span>
+                        <span id="containerPrice">$0.00</span>
+                    </div>
+                    <div class="price-total">
+                        <span>Total:</span>
+                        <span id="totalPrice">$0.00</span>
+                    </div>
+                </div>
+
+                <button class="add-creation-btn" id="addToCartBtn" disabled>Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share to Community Modal -->
+    <div class="modal" id="shareModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Save Your Creation</h2>
+                <button class="close-modal-btn" onclick="closeShareModal()">×</button>
+            </div>
+            <form id="shareForm">
+                <div class="form-group">
+                    <label>Creation Name *</label>
+                    <input type="text" id="creationNameInput" required placeholder="Give your creation a catchy name!">
+                </div>
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea id="creationDescInput" required placeholder="Tell us what makes this special..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Your Name (optional)</label>
+                    <input type="text" id="creatorNameInput" placeholder="Anonymous">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="modal-btn modal-btn-secondary" onclick="addToCartOnly()">Add to Cart Only</button>
+                    <button type="submit" class="modal-btn modal-btn-primary">Add & Share with Community</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon" id="toastIcon">✓</span>
+        <span class="toast-message" id="toastMessage">Success!</span>
+    </div>
+
+    <script src="js/customize.js"></script>
+</body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - Scoop Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 50%, #f0f4ff 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #8b4789);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #ff6b9d;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6b9d, #c44569);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 5% 60px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #8b4789);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .stars {
+            color: #FFD700;
+            font-size: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Review Form */
+        .review-form-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .review-form-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b9d;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .rating-input {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .star {
+            cursor: pointer;
+            color: #ddd;
+            transition: all 0.3s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #FFD700;
+            transform: scale(1.2);
+        }
+
+        .submit-btn {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        /* Filter Buttons */
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #ff6b9d;
+            background: white;
+            color: #ff6b9d;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Reviews Grid */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .reviewer-details h3 {
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .review-rating {
+            color: #FFD700;
+            font-size: 1.2rem;
+        }
+
+        .review-text {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .review-footer {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .helpful-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .helpful-btn:hover {
+            color: #ff6b9d;
+        }
+
+        .empty-reviews {
+            text-align: center;
+            padding: 4rem;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🍦 Scoop Studio</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="customize.html">Customize</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="page-header">
+            <h1>Customer Reviews</h1>
+            <p>See what our happy customers are saying!</p>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number" id="avgRating">4.8</div>
+                <div class="stat-label">Average Rating</div>
+                <div class="stars">★★★★★</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalReviews">0</div>
+                <div class="stat-label">Total Reviews</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Recommended</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2.5K+</div>
+                <div class="stat-label">Happy Customers</div>
+            </div>
+        </div>
+
+        <!-- Review Form -->
+        <div class="review-form-section">
+            <h2>Write a Review</h2>
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="reviewerName" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="rating-input" id="ratingInput">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Your Review</label>
+                    <textarea id="reviewText" required placeholder="Share your experience with us..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <button class="filter-btn active" onclick="filterReviews('all')">All Reviews</button>
+            <button class="filter-btn" onclick="filterReviews(5)">5 Stars</button>
+            <button class="filter-btn" onclick="filterReviews(4)">4 Stars</button>
+            <button class="filter-btn" onclick="filterReviews(3)">3 Stars</button>
+            <button class="filter-btn" onclick="filterReviews(2)">2 Stars</button>
+            <button class="filter-btn" onclick="filterReviews(1)">1 Star</button>
+        </div>
+
+        <!-- Reviews Grid -->
+        <div class="reviews-grid" id="reviewsGrid">
+            <!-- Reviews will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Sample initial reviews
+        const sampleReviews = [
+            {
+                name: "Sarah Johnson",
+                rating: 5,
+                text: "Absolutely amazing! The custom ice cream builder is a game-changer. My kids loved creating their own flavors!",
+                date: "2026-01-08",
+                helpful: 24
+            },
+            {
+                name: "Mike Chen",
+                rating: 5,
+                text: "Best ice cream delivery service ever! Always arrives cold and perfectly packaged. The pistachio dream is my favorite!",
+                date: "2026-01-07",
+                helpful: 18
+            },
+            {
+                name: "Emily Rodriguez",
+                rating: 4,
+                text: "Great quality and flavors. Delivery was quick. Would give 5 stars if there were more vegan options.",
+                date: "2026-01-06",
+                helpful: 12
+            },
+            {
+                name: "David Park",
+                rating: 5,
+                text: "The cookie dough delight is incredible! Fast delivery and customer service is top-notch.",
+                date: "2026-01-05",
+                helpful: 31
+            },
+            {
+                name: "Jessica Williams",
+                rating: 5,
+                text: "My go-to for special occasions. The customization options are endless and quality is always consistent!",
+                date: "2026-01-04",
+                helpful: 15
+            },
+            {
+                name: "Alex Turner",
+                rating: 4,
+                text: "Love the variety of flavors. Salted caramel pretzel is a must-try! Only wish delivery was faster.",
+                date: "2026-01-03",
+                helpful: 9
+            }
+        ];
+
+        // Load reviews from localStorage or use sample reviews
+        let reviews = JSON.parse(localStorage.getItem('icecreamReviews')) || sampleReviews;
+        let selectedRating = 0;
+
+        // Initialize page
+        function init() {
+            setupRatingInput();
+            renderReviews();
+            updateStats();
+            setupFormSubmit();
+        }
+
+        // Setup rating input
+        function setupRatingInput() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    selectedRating = parseInt(this.getAttribute('data-rating'));
+                    updateStarDisplay();
+                });
+            });
+        }
+
+        function updateStarDisplay() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                const rating = parseInt(star.getAttribute('data-rating'));
+                if (rating <= selectedRating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // Setup form submit
+        function setupFormSubmit() {
+            document.getElementById('reviewForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (selectedRating === 0) {
+                    alert('Please select a rating!');
+                    return;
+                }
+
+                const newReview = {
+                    name: document.getElementById('reviewerName').value,
+                    rating: selectedRating,
+                    text: document.getElementById('reviewText').value,
+                    date: new Date().toISOString().split('T')[0],
+                    helpful: 0
+                };
+
+                reviews.unshift(newReview);
+                localStorage.setItem('icecreamReviews', JSON.stringify(reviews));
+
+                alert('Thank you for your review! 🎉');
+                
+                // Reset form
+                document.getElementById('reviewForm').reset();
+                selectedRating = 0;
+                updateStarDisplay();
+                
+                renderReviews();
+                updateStats();
+            });
+        }
+
+        // Render reviews
+        function renderReviews(filter = 'all') {
+            const grid = document.getElementById('reviewsGrid');
+            grid.innerHTML = '';
+
+            let filteredReviews = reviews;
+            if (filter !== 'all') {
+                filteredReviews = reviews.filter(r => r.rating === filter);
+            }
+
+            if (filteredReviews.length === 0) {
+                grid.innerHTML = '<div class="empty-reviews">No reviews found for this rating.</div>';
+                return;
+            }
+
+            filteredReviews.forEach((review, index) => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                
+                const initials = review.name.split(' ').map(n => n[0]).join('');
+                const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                const dateObj = new Date(review.date);
+                const formattedDate = dateObj.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                });
+
+                card.innerHTML = `
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">${initials}</div>
+                            <div class="reviewer-details">
+                                <h3>${review.name}</h3>
+                                <div class="review-date">${formattedDate}</div>
+                            </div>
+                        </div>
+                        <div class="review-rating">${stars}</div>
+                    </div>
+                    <p class="review-text">${review.text}</p>
+                    <div class="review-footer">
+                        <button class="helpful-btn" onclick="markHelpful(${index})">
+                            👍 Helpful (${review.helpful})
+                        </button>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter reviews
+        function filterReviews(rating) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderReviews(rating);
+        }
+
+        // Mark review as helpful
+        function markHelpful(index) {
+            reviews[index].helpful++;
+            localStorage.setItem('icecreamReviews', JSON.stringify(reviews));
+            renderReviews();
+        }
+
+        // Update stats
+        function updateStats() {
+            const totalReviews = reviews.length;
+            const avgRating = reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews;
+            
+            document.getElementById('totalReviews').textContent = totalReviews;
+            document.getElementById('avgRating').textContent = avgRating.toFixed(1);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
