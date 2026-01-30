@@ -1,7 +1,7 @@
 // Load cart from localStorage
 let cart = JSON.parse(localStorage.getItem('icecreamCart')) || [];
 let discountAmount = 0;
-const deliveryFee = 5.99;
+const deliveryFee = 50;
 
 // Promo codes
 const promoCodes = {
@@ -262,4 +262,5 @@ function clearCart() {
 }
 
 // Initialize on page load
+
 document.addEventListener('DOMContentLoaded', initCart);
