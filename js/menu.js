@@ -3,7 +3,7 @@ const menuData = [
     {
         id: 1,
         name: "Classic Vanilla Bean",
-        price: 6.99,
+        price: 60,
         category: "classic",
         description: "Rich Madagascar vanilla with real bean specks. A timeless favorite.",
         emoji: "🍦",
@@ -13,7 +13,7 @@ const menuData = [
     {
         id: 2,
         name: "Chocolate Fudge Brownie",
-        price: 7.99,
+        price: 70,
         category: "classic",
         description: "Decadent chocolate ice cream with chunks of fudgy brownies.",
         emoji: "🍫",
@@ -23,7 +23,7 @@ const menuData = [
     {
         id: 3,
         name: "Strawberry Cheesecake",
-        price: 8.49,
+        price: 85,
         category: "premium",
         description: "Creamy cheesecake ice cream swirled with fresh strawberry compote.",
         emoji: "🍓",
@@ -33,7 +33,7 @@ const menuData = [
     {
         id: 4,
         name: "Salted Caramel Pretzel",
-        price: 8.99,
+        price: 90,
         category: "classic",
         description: "Sweet and salty perfection with caramel swirls and pretzel pieces.",
         emoji: "🥨",
@@ -43,7 +43,7 @@ const menuData = [
     {
         id: 5,
         name: "Mint Chocolate Chip",
-        price: 7.49,
+        price: 65,
         category: "classic",
         description: "Cool peppermint ice cream loaded with dark chocolate chips.",
         emoji: "🌿",
@@ -53,7 +53,7 @@ const menuData = [
     {
         id: 6,
         name: "Coconut Mango Bliss",
-        price: 9.49,
+        price: 90,
         category: "vegan",
         description: "Dairy-free coconut base with sweet mango chunks. 100% plant-based.",
         emoji: "🥥",
@@ -63,7 +63,7 @@ const menuData = [
     {
         id: 7,
         name: "Cookie Dough Delight",
-        price: 8.99,
+        price: 70,
         category: "classic",
         description: "Vanilla ice cream packed with edible cookie dough pieces.",
         emoji: "🍪",
@@ -73,7 +73,7 @@ const menuData = [
     {
         id: 8,
         name: "Pistachio Dream",
-        price: 9.99,
+        price: 65,
         category: "premium",
         description: "Authentic Sicilian pistachio ice cream made with real nuts.",
         emoji: "🌰",
@@ -83,7 +83,7 @@ const menuData = [
     {
         id: 9,
         name: "Pumpkin Spice Latte",
-        price: 8.49,
+        price: 80,
         category: "seasonal",
         description: "Fall favorite with pumpkin, cinnamon, and espresso swirls.",
         emoji: "🎃",
@@ -93,7 +93,7 @@ const menuData = [
     {
         id: 10,
         name: "Berry Sorbet",
-        price: 7.99,
+        price: 70,
         category: "vegan",
         description: "Refreshing blend of strawberries, blueberries, and raspberries.",
         emoji: "🫐",
@@ -103,7 +103,7 @@ const menuData = [
     {
         id: 11,
         name: "Coffee Toffee Crunch",
-        price: 8.49,
+        price: 75,
         category: "premium",
         description: "Espresso ice cream with crunchy toffee bits throughout.",
         emoji: "☕",
@@ -113,7 +113,7 @@ const menuData = [
     {
         id: 12,
         name: "Lavender Honey",
-        price: 9.99,
+        price: 90,
         category: "premium",
         description: "Delicate lavender infused with organic wildflower honey.",
         emoji: "💜",
@@ -124,7 +124,7 @@ const menuData = [
     {
         id: 13,
         name: "Matcha & White Chocolate",
-        price: 10.99,
+        price: 120,
         category: "premium",
         description: "Earthy matcha with a smooth white chocolate sweetness.",
         emoji: "💜",
@@ -135,7 +135,7 @@ const menuData = [
     {
         id: 14,
         name: "Cherry Fudge Swirl",
-        price: 9.99,
+        price: 110,
         category: "premium",
         description: "Sweet cherry ice cream folded with thick chocolate fudge swirls.",
         emoji: "💜",
@@ -146,7 +146,7 @@ const menuData = [
     {
         id: 15,
         name: "Classic Blackcurrant",
-        price: 8.99,
+        price: 65,
         category: "classic",
         description: "Rich blackcurrant ice cream with a bold, tangy berry taste.",
         emoji: "💜",
@@ -429,4 +429,5 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 document.addEventListener('DOMContentLoaded', function() {
     renderMenu();
     updateCartSummary();
+
 });
