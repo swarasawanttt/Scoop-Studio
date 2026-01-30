@@ -52,7 +52,7 @@ function renderCart() {
                 <div class="item-name">${item.name}</div>
                 <span class="item-category">${item.category}</span>
                 <div class="item-description">${item.description}</div>
-                <div class="item-price">$${item.price.toFixed(2)} each</div>
+                <div class="item-price">$₹{item.price.toFixed(2)} each</div>
             </div>
             <div class="item-actions">
                 <div class="quantity-controls">
@@ -179,10 +179,10 @@ function updateSummary() {
     const total = subtotal + finalDeliveryFee - discount;
     
     // Update DOM
-    document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('subtotal').textContent = `$₹{subtotal.toFixed(2)}`;
     document.getElementById('deliveryFee').textContent = finalDeliveryFee === 0 ? 'FREE' : `$${finalDeliveryFee.toFixed(2)}`;
-    document.getElementById('discount').textContent = `-$${discount.toFixed(2)}`;
-    document.getElementById('totalPrice').textContent = `$${total.toFixed(2)}`;
+    document.getElementById('discount').textContent = `-$₹{discount.toFixed(2)}`;
+    document.getElementById('totalPrice').textContent = `$₹{total.toFixed(2)}`;
     
     // Enable/disable checkout button
     document.getElementById('checkoutBtn').disabled = cart.length === 0;
@@ -264,3 +264,4 @@ function clearCart() {
 // Initialize on page load
 
 document.addEventListener('DOMContentLoaded', initCart);
+
