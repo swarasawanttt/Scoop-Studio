@@ -1,45 +1,45 @@
 // Customization options data
 const customizationData = {
     bases: [
-        { id: 'b1', name: 'Vanilla', emoji: '🤍', price: 5.99, image: 'images/flav2.jpg' },
-        { id: 'b2', name: 'Chocolate', emoji: '🤎', price: 5.99, image: 'images/flav1.jpg' },
-        { id: 'b3', name: 'Strawberry', emoji: '💗', price: 6.49, image: 'images/flav3.jpg' },
-        { id: 'b4', name: 'Mint', emoji: '💚', price: 6.49, image: 'images/flav4.jpg' },
-        { id: 'b5', name: 'Coffee', emoji: '☕', price: 6.99, image: 'images/flav5.jpg' },
-        { id: 'b6', name: 'Pistachio', emoji: '💛', price: 7.49, image: 'images/flav6.jpg' }
+        { id: 'b1', name: 'Vanilla', emoji: '🤍', price: 50, image: 'images/flav2.jpg' },
+        { id: 'b2', name: 'Chocolate', emoji: '🤎', price: 55, image: 'images/flav1.jpg' },
+        { id: 'b3', name: 'Strawberry', emoji: '💗', price: 55, image: 'images/flav3.jpg' },
+        { id: 'b4', name: 'Mint', emoji: '💚', price: 50, image: 'images/flav4.jpg' },
+        { id: 'b5', name: 'Coffee', emoji: '☕', price: 60, image: 'images/flav5.jpg' },
+        { id: 'b6', name: 'Pistachio', emoji: '💛', price: 60, image: 'images/flav6.jpg' }
     ],
     mixins: [
-        { id: 'm1', name: 'Brownie Chunks', emoji: '🍫', price: 1.50, image: 'images/brownie.jpg' },
-        { id: 'm2', name: 'Cookie Dough', emoji: '🍪', price: 1.50, image: 'images/dough.jpg' },
-        { id: 'm3', name: 'Oreo Pieces', emoji: '⚫', price: 1.50, image: 'images/oreo.jpg' },
-        { id: 'm4', name: 'Peanut Butter Cups', emoji: '🥜', price: 1.75, image: 'images/peanut.jpg' },
-        { id: 'm5', name: 'Caramel Chunks', emoji: '🟡', price: 1.25, image: 'images/caramels.jpeg' },
-        { id: 'm6', name: 'Fresh Berries', emoji: '🍓', price: 2.00, image: 'images/mixberries.jpg' }
+        { id: 'm1', name: 'Brownie Chunks', emoji: '🍫', price: 20, image: 'images/brownie.jpg' },
+        { id: 'm2', name: 'Cookie Dough', emoji: '🍪', price: 20, image: 'images/dough.jpg' },
+        { id: 'm3', name: 'Oreo Pieces', emoji: '⚫', price: 20, image: 'images/oreo.jpg' },
+        { id: 'm4', name: 'Peanut Butter Cups', emoji: '🥜', price: 35, image: 'images/peanut.jpg' },
+        { id: 'm5', name: 'Caramel Chunks', emoji: '🟡', price: 35, image: 'images/caramels.jpeg' },
+        { id: 'm6', name: 'Fresh Berries', emoji: '🍓', price: 20, image: 'images/mixberries.jpg' }
     ],
     sauces: [
-        { id: 's1', name: 'Hot Fudge', emoji: '🍫', price: 1.00, image: 'images/fudge.jpg' },
-        { id: 's2', name: 'Caramel', emoji: '🍯', price: 1.00, image: 'images/carsauce.jpg' },
-        { id: 's3', name: 'Strawberry', emoji: '🍓', price: 0.75, image: 'images/straw.jpg' },
-        { id: 's4', name: 'Peanut Butter', emoji: '🥜', price: 1.25, image: 'images/peanuts.jpg' },
-        { id: 's5', name: 'Marshmallow', emoji: '☁️', price: 0.75, image: 'images/marsh.jpg' },
-        { id: 's6', name: 'Raspberry', emoji: '🫐', price: 1.00, image: 'images/rasp.jpg' }
+        { id: 's1', name: 'Hot Fudge', emoji: '🍫', price: 10, image: 'images/fudge.jpg' },
+        { id: 's2', name: 'Caramel', emoji: '🍯', price: 10, image: 'images/carsauce.jpg' },
+        { id: 's3', name: 'Strawberry', emoji: '🍓', price: 10, image: 'images/straw.jpg' },
+        { id: 's4', name: 'Peanut Butter', emoji: '🥜', price: 10, image: 'images/peanuts.jpg' },
+        { id: 's5', name: 'Marshmallow', emoji: '☁️', price: 10, image: 'images/marsh.jpg' },
+        { id: 's6', name: 'Raspberry', emoji: '🫐', price: 10, image: 'images/rasp.jpg' }
     ],
     toppings: [
-        { id: 't1', name: 'Sprinkles', emoji: '🌈', price: 0.50, image: 'images/sprinkles.jpg' },
-        { id: 't2', name: 'Whipped Cream', emoji: '🍦', price: 0.75, image: 'images/whipped.jpg' },
-        { id: 't3', name: 'Cherry', emoji: '🍒', price: 0.50, image: 'images/cherry.jpg' },
-        { id: 't4', name: 'Crushed Nuts', emoji: '🌰', price: 0.75, image: 'images/nuts.jpg' },
-        { id: 't5', name: 'Chocolate Chips', emoji: '🍫', price: 0.75, image: 'images/chips.jpg' },
-        { id: 't6', name: 'Gummy Bears', emoji: '🐻', price: 0.50, image: 'images/gumy.jpg' },
-        { id: 't7', name: 'M&Ms', emoji: '🔴', price: 0.75, image: 'images/mm.jpg' },
-        { id: 't8', name: 'Coconut Flakes', emoji: '🥥', price: 0.50, image: 'images/coco.jpeg' }
+        { id: 't1', name: 'Sprinkles', emoji: '🌈', price: 10, image: 'images/sprinkles.jpg' },
+        { id: 't2', name: 'Whipped Cream', emoji: '🍦', price: 10, image: 'images/whipped.jpg' },
+        { id: 't3', name: 'Cherry', emoji: '🍒', price: 10, image: 'images/cherry.jpg' },
+        { id: 't4', name: 'Crushed Nuts', emoji: '🌰', price: 10, image: 'images/nuts.jpg' },
+        { id: 't5', name: 'Chocolate Chips', emoji: '🍫', price: 10, image: 'images/chips.jpg' },
+        { id: 't6', name: 'Gummy Bears', emoji: '🐻', price: 10, image: 'images/gumy.jpg' },
+        { id: 't7', name: 'M&Ms', emoji: '🔴', price: 10, image: 'images/mm.jpg' },
+        { id: 't8', name: 'Coconut Flakes', emoji: '🥥', price: 10, image: 'images/coco.jpeg' }
     ],
     containers: [
-        { id: 'c1', name: 'Waffle Cone', emoji: '🍦', price: 0.50, image: 'images/waffle.jpeg' },
-        { id: 'c2', name: 'Sugar Cone', emoji: '🧁', price: 0.25, image: 'images/sugar.webp' },
-        { id: 'c3', name: 'Cup', emoji: '🥤', price: 0.10, image: 'images/cup.jpg' },
-        { id: 'c4', name: 'Waffle Bowl', emoji: '🥣', price: 1.00, image: 'images/bowl.jpg' },
-        { id: 'c5', name: 'Tub', emoji: '🪣', price: 1.50, image: 'images/tub.png' }
+        { id: 'c1', name: 'Waffle Cone', emoji: '🍦', price: 25, image: 'images/waffle.jpeg' },
+        { id: 'c2', name: 'Sugar Cone', emoji: '🧁', price: 25, image: 'images/sugar.webp' },
+        { id: 'c3', name: 'Cup', emoji: '🥤', price: 20, image: 'images/cup.jpg' },
+        { id: 'c4', name: 'Waffle Bowl', emoji: '🥣', price: 60, image: 'images/bowl.jpg' },
+        { id: 'c5', name: 'Tub', emoji: '🪣', price: 100, image: 'images/tub.png' }
     ]
 };
 
@@ -431,4 +431,5 @@ function resetBuilder() {
 }
 
 // Initialize on page load
+
 document.addEventListener('DOMContentLoaded', init);
